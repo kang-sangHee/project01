@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="mb-3">
+    <form method="post" action="/web/books/create">
+        <div class="row g-2">
+            <div class="col">
+                <input type="text" name="title" class="form-control" placeholder="도서명" required>
+            </div>
+            <div class="col">
+                <input type="text" name="author" class="form-control" placeholder="저자" required>
+            </div>
+            <div class="col">
+                <input type="text" name="publisher" class="form-control" placeholder="출판사">
+            </div>
+            <div class="col">
+                <input type="number" name="published_year" class="form-control" placeholder="출판연도" min="1000" max="2100">
+            </div>
+            <div class="col">
+                <input type="text" name="isbn" class="form-control" placeholder="ISBN">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">등록</button>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>도서명</th>
+            <th>저자</th>
+            <th>출판사</th>
+            <th>출판연도</th>
+            <th>ISBN</th>
+            <th>삭제</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publisher or '' }}</td>
+            <td>{{ book.published_year or '' }}</td>
+            <td>{{ book.isbn or '' }}</td>
+            <td>
+                <form method="post" action="/web/books/delete/{{ book.id }}" style="display:inline">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from src.routers.books import router as books_router
+from src.web.routes import router as web_router
 
 app = FastAPI(
     title="도서 관리 API",
@@ -9,7 +10,9 @@ app = FastAPI(
     redirect_slashes=False,
 )
 
+
 app.include_router(books_router, prefix="/api/v1")
+app.include_router(web_router)
 
 
 @app.get("/", tags=["health"])
